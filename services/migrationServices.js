@@ -1,16 +1,16 @@
-import { readFile } from 'fs/promises';
-import { parse } from 'csv-parse/sync';
-import { Pool } from 'pg';
-import { MongoClient } from 'mongodb';
-import { env } from '../src/env.js';
+import { readFile } from 'fs/promises'; //PAra leer el archivo CSV de forma asíncrona
+import { parse } from 'csv-parse/sync';// Para convertirt archivo csv en algo que JS entienda
+import { Pool } from 'pg'; // Para conectarnos a PostgreSQL
+import { MongoClient } from 'mongodb'; // Para conectarnos a MongoDB
+import { env } from '../src/env.js'; //Donde están guardadas las direcciones y configuraciones (como las contraseñas).
 
-const pool = new Pool({ connectionString: env.postgresUri });
-const mongoClient = new MongoClient(env.mongoUri);
+const pool = new Pool({ connectionString: env.postgresUri }); //Pool conexion a PostgreSQL
+const mongoClient = new MongoClient(env.mongoUri); //mongoClient conexion a MongoDB
 
-export async function migrateData() {
+export async function migrateData() { //esta fun hace toda la migracion(traslado de datos), async porque hay que esperar a que se lean los archivos, se conecten a las bases de datos, etc.
     try {
-        const csvData = await readFile(env.fileDataCsv, 'utf-8');
-        const records = parse(csvData, { columns: true });
+        const csvData = await readFile(env.fileDataCsv, 'utf-8'); //lee el archivo CSV 
+        const records = parse(csvData, { columns: true }); //lo convierte en una lista de registros.
 
         const client = await pool.connect();
         await mongoClient.connect();

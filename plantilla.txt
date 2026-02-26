@@ -1,0 +1,49 @@
+//------------------------------------------------------------------
+
+sudo docker run -d \
+  --name <NOMBRE_CONTAINER> \
+  -e POSTGRES_USER=<USUARIO> \
+  -e POSTGRES_PASSWORD=<PASSWORD> \
+  -e POSTGRES_DB=<NOMBRE_DB> \
+  -p <PUERTO_HOST>:5432 \
+  postgres
+  
+ postgresql://<USUARIO>:<PASSWORD>@localhost:<PUERTO_HOST>/<NOMBRE_DB>
+
+//------------------------------------------------------------------
+
+sudo docker run -d --name <nombre> -p <puertoLocal>:27017 mongo
+
+mongodb://localhost:<puertoLocal>
+
+
+//opcion con user y password
+
+docker run -d\
+--name <name>\
+-p <puertoLocal>:27017\
+-e MONGO_INITDB_ROOT_USERNAME=<user>\
+-e MONGO_INITDB_ROOT_PASSWORD=<password>\
+mongo
+
+mongodb://<user>:<password>@localhost:<puertoLocal>
+
+//---------------------------------------------------------------------
+
+
+sudo docker run -d \
+  --name SALUD_TOTAL \
+  -e POSTGRES_USER=KMILA \
+  -e POSTGRES_PASSWORD=12345678 \
+  -e POSTGRES_DB=SALUD_POSTGRES \
+  -p 5423:5432 \
+  postgres
+
+docker run -d \
+--name SALUD_PLUS_MONGO \
+-p 27018:27017 \
+-e MONGO_INITDB_ROOT_USERNAME=KMILA \
+-e MONGO_INITDB_ROOT_PASSWORD=12345678 \
+mongo
+
+postgresql://KMILA:12345678@localhost:5423/SALUD_POSTGRES

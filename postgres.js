@@ -1,5 +1,5 @@
 import { Pool } from 'pg';
-import { env } from './env.js';
+import { env } from './src/env.js';
 
 const pool = new Pool({
     connectionString: env.postgresUri
