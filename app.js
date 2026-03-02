@@ -1,25 +1,12 @@
-import express from 'express';
-import cors from 'cors';
-import bodyParser from 'body-parser';
-import createTables from './postgres.js';
+import express from "express";
+import simulacroRoutes from "./routes/simulacro.routes.js";
+import doctorsRoutes from './routes/doctors.routes.js'
 
-// Initialize Express app
 const app = express();
-const PORT = process.env.PORT || 3000;
 
-// Middleware configuration
-app.use(cors()); // Enable CORS for cross-origin requests
-app.use(bodyParser.json()); // Parse JSON bodies
+app.use(express.json());
 
-// Test route
-app.get('/', (req, res) => {
-  res.status(200).json({ message: 'Server is running!' });
-});
+app.use("/api/simulacro", simulacroRoutes);
+app.use("/api/doctors", doctorsRoutes)
 
-// Initialize PostgreSQL tables
-createTables();
-
-// Start the server
-app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
-});
+export default app;
